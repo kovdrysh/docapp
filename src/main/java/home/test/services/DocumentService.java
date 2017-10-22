@@ -26,8 +26,8 @@ public class DocumentService {
             String type = MongoHelper.parseType(file.getOriginalFilename());
             Document document = new Document(file.getInputStream(), parentId, file.getOriginalFilename(), file.getContentType(), MongoHelper.generateCurrentDate(), type);
             DBObject metaData = new BasicDBObject();
+            metaData.put("objectId", MongoHelper.generateId());
             metaData.put("parentId", parentId);
-            logger.debug("parseType: " + type);
             metaData.put("doctype", MongoHelper.parseType(file.getOriginalFilename()));
             metaData.put("date", MongoHelper.generateCurrentDate());
 
@@ -41,7 +41,9 @@ public class DocumentService {
         GridFSFindIterable allbyParentId = documentDao.getAllbyParentId(parentId);
         List<Document> documents = new ArrayList<Document>();
         for (GridFSFile gridFSFile : allbyParentId) {
-            String fileName = gridFSFile.getFilename();
+            Long id = (Long) gridFSFile.getMetadata().get("objectId");
+            logger.debug("File objectId: " + id);
+            String fileName = MongoHelper.cutFileName(gridFSFile.getFilename());
             logger.debug("fileName: " + fileName);
             String parseType = (String) gridFSFile.getMetadata().get("doctype");
             logger.debug("parseType: " + parseType);
@@ -49,12 +51,14 @@ public class DocumentService {
             logger.debug("date: " + date);
             Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
             logger.debug("parentId: " + parentId1);
-            String contentType = (String)gridFSFile.getMetadata().get("_contentType");
-            logger.debug("contentType: " + contentType);
 
-            documents.add(new Document(null, parentId1, fileName, contentType, date, parseType));
+            documents.add(new Document(id, parentId1, fileName, date, parseType));
         }
         return documents;
+    }
+
+    public void delete(Long id){
+        documentDao.delete(id);
     }
 
 

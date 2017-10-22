@@ -43,4 +43,8 @@ public class MongoHelper {
         }
         return "txt";
     }
+
+    public static String cutFileName(String name){
+        return name.length() <= 30 ? name : name.substring(0, 27) + "...";
+    }
 }

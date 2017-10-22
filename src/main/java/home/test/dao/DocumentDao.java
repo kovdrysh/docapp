@@ -22,4 +22,8 @@ public class DocumentDao {
         return gridOperations.find(new Query().addCriteria(Criteria.where("metadata.parentId").is(parentId)));
      }
 
+     public void delete(Long objectId){
+        gridOperations.delete(new Query().addCriteria(Criteria.where("metadata.objectId").is(objectId)));
+     }
+
 }

@@ -10,7 +10,7 @@
     <table>
         <tr>
             <td>Name:</td>
-            <td><form:input path="name" /></td>
+            <td><form:input path="name" maxlength="30" /></td>
         </tr>
         <tr style="display:none;">
             <td >Date:</td>

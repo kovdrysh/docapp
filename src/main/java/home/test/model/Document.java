@@ -1,17 +1,28 @@
 package home.test.model;
 
 
+import org.springframework.data.annotation.Id;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 
 public class Document {
 
+    private Long id;
     private InputStream inputStream;
     private Long parentId;
     private String name;
     private String contentType;
     private String date;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getType() {
         return type;
@@ -26,6 +37,14 @@ public class Document {
     public Document(InputStream inputStream, Long parentId) {
         this.inputStream = inputStream;
         this.parentId = parentId;
+    }
+
+    public Document(Long id, Long parentId, String name, String date, String type) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.date = date;
+        this.type = type;
     }
 
     public Document(InputStream inputStream, Long parentId, String name, String contentType, String date, String type) {

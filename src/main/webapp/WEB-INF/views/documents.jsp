@@ -29,7 +29,7 @@
         <tr>
             <td><img src="../resources/images/${document.type}.png">${document.name}</td>
             <td>${document.date}</td>
-            <td><img src="../resources/images/edit.gif">|<img src="../resources/images/cross-icon.png"></td>
+            <td><img src="../resources/images/edit.gif">|<a href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><img src="../resources/images/cross-icon.png"></a></td>
         </tr>
     </c:forEach>
     </table>
