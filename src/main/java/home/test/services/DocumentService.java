@@ -61,5 +61,18 @@ public class DocumentService {
         documentDao.delete(id);
     }
 
+    public void bulkDelete(List<Long> parentIds){
+        List<Long> itemsIdToDelete = new ArrayList<Long>();
+        for (Long parentId : parentIds) {
+            List<Document> documentsForRemove = getAllByParentId(parentId);
+            for (Document document : documentsForRemove) {
+                itemsIdToDelete.add(document.getId());
+            }
+        }
+        for (Long aLong : itemsIdToDelete) {
+            delete(aLong);
+        }
+    }
+
 
 }

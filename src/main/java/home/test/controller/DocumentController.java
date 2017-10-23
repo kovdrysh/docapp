@@ -72,6 +72,7 @@ public class DocumentController {
         folderService.remove(id);
         return "redirect:/document?id=" + parentId;
     }
+
     @RequestMapping(value = "/deleteDoc", method = RequestMethod.GET)
     public String deleteDocument(@RequestParam(required = true) Long id, @RequestParam(required = true) Long parentId){
         documentService.delete(id);

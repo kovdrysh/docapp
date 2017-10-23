@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
 public class FolderDao {
     @Autowired
     private MongoOperations mongoOperations;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public void save(Folder folder){
         mongoOperations.save(folder);
@@ -39,5 +42,11 @@ public class FolderDao {
 
     public void remove(Long id){
         mongoOperations.remove(Query.query(Criteria.where("id").is(id)), Folder.class);
+    }
+
+    public void bulkRemove(List<Long> ids){
+        for (Long id : ids) {
+            remove(id);
+        }
     }
 }
