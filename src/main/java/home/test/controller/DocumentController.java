@@ -51,7 +51,8 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/addFolder", method = RequestMethod.POST)
-    public String addFolder(@ModelAttribute("folder") Folder folder){
+    public String addFolder(Folder folder){
+        LOGGER.debug("Folder "+folder.getName());
         if (folder.getId() == null){
             folderService.add(folder);
         }
