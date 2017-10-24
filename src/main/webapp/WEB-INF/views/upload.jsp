@@ -16,9 +16,9 @@
     Select a file to upload: <br/>
     <form action="/upload?parentId=${parentId}" method="post"
           enctype="multipart/form-data">
-        <input type="file" name="file" size="50"/>
+        <input class="pointer" type="file" name="file" size="50"/>
         <br/>
-        <input type="submit" value="Upload File"/>
+        <input class="pointer" type="submit" value="Upload File"/>
     </form>
 </body>
 </html>

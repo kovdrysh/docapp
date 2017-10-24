@@ -4,41 +4,53 @@
 <html>
 <head>
     <title>All Documents</title>
+    <script type="text/javascript" src="../resources/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../resources/js/popper.js"></script>
+    <script type="text/javascript" src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/upload.js"></script>
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/css/font-awesome/css/font-awesome.min.css">
 </head>
 <style>
     <%@include file="../resources/css/style.css"%>
 </style>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-<script src="../resources/js/upload.js"></script>
-<body>
-    <table width="600px">
-        <tr>
-            <td><b>Name</b></td>
-            <td><b>Created Date</b></td>
-            <td><b>Action</b></td>
-        </tr>
-        <tr>
-            <td><img src="../resources/images/nav.gif"> <a href="/document?id=${stepback}">...</a> </td>
-        </tr>
-    <c:forEach var="folder" items="${folders}">
-        <tr>
-            <td><img src="../resources/images/nav.gif"> <a href="/document?id=${folder.id}">${folder.name}</a></td>
-            <td>${folder.date}</td>
-            <td><a href="/editFolder?id=${folder.id}"><img src="../resources/images/edit.gif"></a> | <a href="/deleteFolder?id=${folder.id}"><img src="../resources/images/cross-icon.png"></a></td>
-        </tr>
-    </c:forEach>
-    <c:forEach var="document" items="${documents}">
-        <tr>
-            <td><img src="../resources/images/${document.type}.png"><a href="/download/${document._id}">${document.name}</a></td>
-            <td>${document.date}</td>
-            <td><img src="../resources/images/edit.gif">|<a href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><img src="../resources/images/cross-icon.png"></a></td>
-        </tr>
-    </c:forEach>
-    </table>
 
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="../resources/js/upload.js"></script>-->
+<body>
+    <div class="container">
+        <table class="table table-hover col-md-4 col-sm-12 col-xs-12 col-lg-4">
+            <thread>
+                <tr>
+                    <td><b>Name</b></td>
+                    <td><b>Created Date</b></td>
+                    <td><b>Action</b></td>
+                </tr>
+            </thread>
+            <tr>
+                <td><i class="fa fa-folder-open" aria-hidden="true"></i><a href="/document?id=${stepback}">..</a> </td>
+                <td></td>
+                <td></td>
+            </tr>
+        <c:forEach var="folder" items="${folders}">
+            <tr>
+                <td><i class="fa fa-folder" aria-hidden="true"></i><a href="/document?id=${folder.id}">${folder.name}</a></td>
+                <td>${folder.date}</td>
+                <td><a href="/editFolder?id=${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="/deleteFolder?id=${folder.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+            </tr>
+        </c:forEach>
+        <c:forEach var="document" items="${documents}">
+            <tr>
+                <td><img src="../resources/images/${document.type}.png"><a href="/download/${document._id}">${document.name}</a></td>
+                <td>${document.date}</td>
+                <td><a href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+            </tr>
+        </c:forEach>
+        </table>
+    </div>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create folder</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Add document</button>
 

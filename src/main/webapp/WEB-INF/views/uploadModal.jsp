@@ -10,14 +10,14 @@
             <form id="folder-form" method="POST" action="/upload?parentId=${parentId}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="file" class="col-form-label">Select a file to upload:</label>
+                        <label  for="file" class="col-form-label">Select a file to upload:</label>
                         <br>
-                        <input type="file" id="file" name="file" size="50"/>
+                        <input type="file" id="file" class="pointer" name="file" size="50"/>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="submit-btn" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-secondary pointer" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submit-btn" class="btn btn-primary pointer">Upload</button>
                 </div>
             </form>
         </div>
