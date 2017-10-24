@@ -1,14 +1,15 @@
 package home.test.model;
 
 
-import org.springframework.data.annotation.Id;
+import org.bson.BSON;
+import org.bson.BsonValue;
+import org.bson.types.ObjectId;
 
-import java.io.File;
 import java.io.InputStream;
-import java.util.Date;
 
 public class Document {
 
+    private String _id;
     private Long id;
     private InputStream inputStream;
     private Long parentId;
@@ -39,7 +40,20 @@ public class Document {
         this.parentId = parentId;
     }
 
-    public Document(Long id, Long parentId, String name, String date, String type) {
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getBSONIdAsText(){
+        return this._id.toString();
+    }
+
+    public Document(String _id, Long id, Long parentId, String name, String date, String type) {
+        this._id = _id;
         this.id = id;
         this.parentId = parentId;
         this.name = name;
@@ -54,6 +68,12 @@ public class Document {
         this.contentType = contentType;
         this.date = date;
         this.type = type;
+    }
+
+    public Document(String name, InputStream inputStream, String contentType){
+        this.name = name;
+        this.inputStream = inputStream;
+        this.contentType = contentType;
     }
 
     public InputStream inputStream() {

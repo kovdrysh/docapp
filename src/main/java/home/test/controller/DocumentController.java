@@ -1,19 +1,24 @@
 package home.test.controller;
 
-import home.test.dao.FolderDao;
+import com.mongodb.gridfs.GridFSDBFile;
 import home.test.model.Folder;
 import home.test.services.DocumentService;
 import home.test.services.FolderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import org.apache.log4j.Logger;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Controller
 public class DocumentController {
@@ -78,4 +83,7 @@ public class DocumentController {
         documentService.delete(id);
         return "redirect:/document?id=" + parentId;
     }
+    //@GET
+    //@Path("/download/file/{id}")
+
 }
