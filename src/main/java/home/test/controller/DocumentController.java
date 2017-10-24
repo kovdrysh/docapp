@@ -5,6 +5,7 @@ import home.test.model.Folder;
 import home.test.services.DocumentService;
 import home.test.services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class DocumentController {
@@ -40,14 +44,6 @@ public class DocumentController {
         modelAndView.addObject("documents", documentService.getAllByParentId(id));
 
         return modelAndView;
-    }
-
-    @RequestMapping(value = "/addFolder", method = RequestMethod.GET)
-    public ModelAndView showAddFolderForm(@RequestParam(required = false) Long parentId){
-        if (parentId == null){
-            parentId = Long.valueOf("0");
-        }
-        return new ModelAndView("addFolder", "folder", new Folder(parentId));
     }
 
     @RequestMapping(value = "/addFolder", method = RequestMethod.POST)

@@ -2,6 +2,7 @@ package home.test.dao;
 
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.GridFSFindIterable;
+import com.mongodb.gridfs.GridFSInputFile;
 import home.test.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;

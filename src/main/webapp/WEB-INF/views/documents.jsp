@@ -38,12 +38,13 @@
         </tr>
     </c:forEach>
     </table>
-    <%--<button><a href="/addFolder?parentId=${parentId}">Create folder</a></button>--%>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal" data-parentid="${parentId}">Create folder</button>
-    <button type="button" class="btn btn-primary"><a href="/upload?parentId=${parentId}">Add document</a></button>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create folder</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Add document</button>
 
 
-    <jsp:include page="../views/uploadModal.jsp"/>
+    <jsp:include page="createModal.jsp"/>
+    <jsp:include page="uploadModal.jsp"/>
 
 
 </body>
