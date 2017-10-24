@@ -10,6 +10,8 @@
     <script src="../resources/js/upload.js"></script>
     <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="../resources/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resources/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.2.css">
 </head>
 <style>
     <%@include file="../resources/css/style.css"%>
@@ -23,7 +25,7 @@
 <body>
     <div class="container">
         <div class="tablediv" >
-            <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
+            <table class="table table-hover table-condensed     col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
                 <thread>
                     <tr>
                         <td><b>Name</b></td>
@@ -32,7 +34,7 @@
                     </tr>
                 </thread>
                 <tr>
-                    <td><i class="fa fa-folder-open" aria-hidden="true"></i><a href="/document?id=${stepback}">..</a> </td>
+                    <td><i class="fa fa-folder-open" aria-hidden="true"></i><a style="color: black" href="/document?id=${stepback}"> ..</a> </td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -52,10 +54,9 @@
             </c:forEach>
             </table>
         </div>
+        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#createModal">Create folder</button>
+        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#uploadModal">Add document</button>
     </div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create folder</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Add document</button>
-
 
     <jsp:include page="createModal.jsp"/>
     <jsp:include page="uploadModal.jsp"/>

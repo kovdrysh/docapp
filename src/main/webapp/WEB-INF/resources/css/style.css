@@ -2,12 +2,9 @@
     padding: 1px;
 }
 
-.main-table{
-    margin-bottom: 100px;
-}
-
 .tablediv{
     margin-top: 50px;
-    height: 550px;
+    max-height: 550px;
     overflow: auto;
+    margin-bottom: 30px;
 }
