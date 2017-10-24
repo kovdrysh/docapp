@@ -22,29 +22,36 @@ public class MongoHelper {
         String [] parseFileName = fileName.split(Pattern.quote("."));
         if (parseFileName.length > 0){
            if (parseFileName[parseFileName.length - 1].toLowerCase().equals("pdf")){
-               return "pdf";
+               return "pdf.png";
            }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("doc") ||
             parseFileName[parseFileName.length - 1].toLowerCase().equals("docx")){
-               return "word";
+               return "word.png";
            }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("xls") ||
                    parseFileName[parseFileName.length - 1].toLowerCase().equals("xlsx")){
-               return "excel";
+               return "excel.png";
            }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("txt") ||
             (parseFileName[parseFileName.length - 1].toLowerCase().equals("xml"))){
-               return "txt";
+               return "txt.png";
            }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("ppt")){
-               return "ppt";
+               return "ppt.png";
            }
-
+           else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("jpg") ||
+                    (parseFileName[parseFileName.length - 1].toLowerCase().equals("jpeg"))){
+                return "images.png";
+            }
+           else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("mp3") ||
+                   (parseFileName[parseFileName.length - 1].toLowerCase().equals("flac"))){
+               return "play.png";
+           }
         }
-        return "txt";
+        return "txt.png";
     }
 
     public static String cutFileName(String name){
-        return name.length() <= 30 ? name : name.substring(0, 27) + "...";
+        return name.length() <= 40 ? name : name.substring(0, 37) + "...";
     }
 }

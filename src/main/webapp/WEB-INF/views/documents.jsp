@@ -47,7 +47,7 @@
             </c:forEach>
             <c:forEach var="document" items="${documents}">
                 <tr>
-                    <td><p><img src="../resources/images/${document.type}.png"><a style="color: black" href="/download/${document._id}"> ${document.name}</a></p></td>
+                    <td><p><img src="../resources/images/${document.type}"><a style="color: black" href="/download/${document._id}"> ${document.name}</a></p></td>
                     <td>${document.date}</td>
                     <td><a style="color: black" href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
