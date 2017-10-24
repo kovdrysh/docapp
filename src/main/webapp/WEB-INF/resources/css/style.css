@@ -1,3 +1,13 @@
 #icon{
     padding: 1px;
 }
+
+.main-table{
+    margin-bottom: 100px;
+}
+
+.tablediv{
+    margin-top: 50px;
+    height: 550px;
+    overflow: auto;
+}

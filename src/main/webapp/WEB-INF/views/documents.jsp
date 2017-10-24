@@ -22,34 +22,36 @@
 <script src="../resources/js/upload.js"></script>-->
 <body>
     <div class="container">
-        <table class="table table-hover col-md-4 col-sm-12 col-xs-12 col-lg-4">
-            <thread>
+        <div class="tablediv" >
+            <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
+                <thread>
+                    <tr>
+                        <td><b>Name</b></td>
+                        <td><b>Created Date</b></td>
+                        <td><b>Action</b></td>
+                    </tr>
+                </thread>
                 <tr>
-                    <td><b>Name</b></td>
-                    <td><b>Created Date</b></td>
-                    <td><b>Action</b></td>
+                    <td><i class="fa fa-folder-open" aria-hidden="true"></i><a href="/document?id=${stepback}">..</a> </td>
+                    <td></td>
+                    <td></td>
                 </tr>
-            </thread>
-            <tr>
-                <td><i class="fa fa-folder-open" aria-hidden="true"></i><a href="/document?id=${stepback}">..</a> </td>
-                <td></td>
-                <td></td>
-            </tr>
-        <c:forEach var="folder" items="${folders}">
-            <tr>
-                <td><i class="fa fa-folder" aria-hidden="true"></i><a href="/document?id=${folder.id}">${folder.name}</a></td>
-                <td>${folder.date}</td>
-                <td><a href="/editFolder?id=${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a href="/deleteFolder?id=${folder.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-            </tr>
-        </c:forEach>
-        <c:forEach var="document" items="${documents}">
-            <tr>
-                <td><img src="../resources/images/${document.type}.png"><a href="/download/${document._id}">${document.name}</a></td>
-                <td>${document.date}</td>
-                <td><a href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-            </tr>
-        </c:forEach>
-        </table>
+            <c:forEach var="folder" items="${folders}">
+                <tr>
+                    <td><p><i class="fa fa-folder" aria-hidden="true"></i><a style="color: black" href="/document?id=${folder.id}"> ${folder.name}</a></p></td>
+                    <td>${folder.date}</td>
+                    <td><a style="color: black" href="/editFolder?id=${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteFolder?id=${folder.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+            </c:forEach>
+            <c:forEach var="document" items="${documents}">
+                <tr>
+                    <td><p><img src="../resources/images/${document.type}.png"><a style="color: black" href="/download/${document._id}"> ${document.name}</a></p></td>
+                    <td>${document.date}</td>
+                    <td><a style="color: black" href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+            </c:forEach>
+            </table>
+        </div>
     </div>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">Create folder</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Add document</button>
