@@ -7,6 +7,7 @@ import home.test.services.FolderService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,9 @@ import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class DocumentController {
@@ -47,16 +51,9 @@ public class DocumentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/addFolder", method = RequestMethod.GET)
-    public ModelAndView showAddFolderForm(@RequestParam(required = false) Long parentId){
-        if (parentId == null){
-            parentId = Long.valueOf("0");
-        }
-        return new ModelAndView("addFolder", "folder", new Folder(parentId));
-    }
-
     @RequestMapping(value = "/addFolder", method = RequestMethod.POST)
-    public String addFolder(@ModelAttribute("folder") Folder folder){
+    public String addFolder(Folder folder){
+        LOGGER.debug("Folder "+folder.getName());
         if (folder.getId() == null){
             folderService.add(folder);
         }
