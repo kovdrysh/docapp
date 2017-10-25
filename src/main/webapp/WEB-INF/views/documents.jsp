@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>All Documents</title>
+    <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/popper.js"></script>
     <script type="text/javascript" src="../resources/js/bootstrap.min.js"></script>
@@ -42,14 +43,14 @@
                 <tr>
                     <td><p><i class="fa fa-folder" aria-hidden="true"></i><a style="color: black" href="/document?id=${folder.id}"> ${folder.name}</a></p></td>
                     <td>${folder.date}</td>
-                    <td><a style="color: black" href="/editFolder?id=${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteFolder?id=${folder.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><a style="color: black" href="/editFolder?id=${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#confirm-delete" data-href="/deleteFolder?id=${folder.id}" data-toggle="modal" data-folder="true"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             </c:forEach>
             <c:forEach var="document" items="${documents}">
                 <tr>
                     <td><p><img src="../resources/images/${document.type}"><a style="color: black" href="/download/${document._id}"> ${document.name}</a></p></td>
                     <td>${document.date}</td>
-                    <td><a style="color: black" href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteDoc?id=${document.id}&parentId=${document.parentId}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><a style="color: black" href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteDoc?id=${document.id}&parentId=${document.parentId}" data-toggle="modal" data-target="#confirm-delete" data-folder="false"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             </c:forEach>
             </table>
@@ -60,6 +61,7 @@
 
     <jsp:include page="createModal.jsp"/>
     <jsp:include page="uploadModal.jsp"/>
+    <jsp:include page="confirmDeleteModal.jsp"/>
 
 
 </body>
