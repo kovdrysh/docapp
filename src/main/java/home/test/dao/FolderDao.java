@@ -15,8 +15,6 @@ import java.util.List;
 public class FolderDao {
     @Autowired
     private MongoOperations mongoOperations;
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     public void save(Folder folder){
         mongoOperations.save(folder);

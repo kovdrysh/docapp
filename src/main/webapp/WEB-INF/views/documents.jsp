@@ -43,7 +43,7 @@
                 <tr>
                     <td><p><i class="fa fa-folder" aria-hidden="true"></i><a style="color: black" href="/document?id=${folder.id}"> ${folder.name}</a></p></td>
                     <td>${folder.date}</td>
-                    <td><a style="color: black" href="#" data-href="/editFolder?id=${folder.id}" data-toggle="modal" data-target="#createModal"  data-name="${folder.name}" data-id="${folder.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#confirm-delete" data-href="/deleteFolder?id=${folder.id}" data-toggle="modal" data-folder="true"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><a style="color: black" href="#" data-href="/editFolder?id=${folder.id}" data-toggle="modal" data-target="#createModal"  data-name="${folder.name}" data-id="${folder.id}" data-action="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#confirm-delete" data-href="/deleteFolder?id=${folder.id}" data-toggle="modal" data-folder="true"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             </c:forEach>
             <c:forEach var="document" items="${documents}">
@@ -72,6 +72,8 @@
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         });
         $('#createModal').on('show.bs.modal', function(e) {
+            if ($(e.relatedTarget).data('action') === "edit")
+                $(this).find('#exampleModalLabel').html("Edit Folder");
             $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
             $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
