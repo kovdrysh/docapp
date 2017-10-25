@@ -2,9 +2,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Delete file
+                Delete File
             </div>
             <div class="modal-body">
+                <p class="debug-url"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
