@@ -20,18 +20,35 @@
 
 
 <body>
-<h1>Spring Security - Sign In</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sign in</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="../resources/images/main.png"
+                     alt="">
 
-<div style="color: red">${message}</div>
-<form class="login-form" action="/j_spring_security_check" method="post">
-    <label for="j_username">Username: </label>
-    <input id="j_username" name="j_username" size="20" maxlength="50" type="text" />
+                <form class="form-signin" action="/j_spring_security_check" method="post">
+                    <%--<label for="j_username">Username: </label>--%>
+                    <input class="form-control" placeholder="Login" id="j_username" name="j_username" size="20" maxlength="50" type="text" />
+                        <%--<label for="j_password">Password: </label>--%>
+                    <input class="form-control" placeholder="Password" required id="j_password" name="j_password" size="20" maxlength="50" type="password" />
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In </button>
+                </form>
 
-    <label for="j_password">Password: </label>
-    <input id="j_password" name="j_password" size="20" maxlength="50" type="password" />
+            </div>
+        </div>
+    </div>
 
-    <input type="submit" value="Login" />
-</form>
+
+
+
+</div>
+
+
+
+
+
 
 </body>
 

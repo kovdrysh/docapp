@@ -40,7 +40,8 @@ public class MongoHelper {
                return "ppt.png";
            }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("jpg") ||
-                    (parseFileName[parseFileName.length - 1].toLowerCase().equals("jpeg"))){
+                    (parseFileName[parseFileName.length - 1].toLowerCase().equals("jpeg")) ||
+                   (parseFileName[parseFileName.length - 1].toLowerCase().equals("png"))){
                 return "images.png";
             }
            else if (parseFileName[parseFileName.length - 1].toLowerCase().equals("mp3") ||

@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
     <title>All Documents</title>
@@ -21,6 +21,13 @@
 
 <body>
 <div class="container">
+    <div class="row">
+        <div class="logout">
+            <sec:authorize access="isAuthenticated()">
+                <a href="<c:url value="/logout"/>"><button type="button" class="btn btn-success btn-md text-right">Logout</button></a>
+            </sec:authorize>
+        </div>
+    </div>
     <div class="tablediv" >
         <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
             <thread>

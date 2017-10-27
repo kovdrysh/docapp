@@ -24,10 +24,15 @@
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="../resources/js/upload.js"></script>-->
 <body>
-<sec:authorize access="isAuthenticated()">
-    <a href="<c:url value="/logout"/>">Logout</a>
-</sec:authorize>
+
     <div class="container">
+        <div class="row">
+            <div class="logout">
+                <sec:authorize access="isAuthenticated()">
+                    <a href="<c:url value="/logout"/>"><button type="button" class="btn btn-success btn-md text-right">Logout</button></a>
+                </sec:authorize>
+            </div>
+        </div>
         <div class="tablediv" >
             <!--<div class="row col-md-12">
                 <div class="col-md-6 col-sm-6 col-xs-6">
