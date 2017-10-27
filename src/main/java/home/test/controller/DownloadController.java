@@ -1,13 +1,14 @@
 package home.test.controller;
 
 import com.mongodb.gridfs.GridFSDBFile;
+import home.test.model.Document;
+import home.test.model.Folder;
 import home.test.services.DocumentService;
+import home.test.services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
@@ -26,6 +27,28 @@ public class DownloadController {
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(DocumentController.class);
     @Autowired
     private DocumentService documentService;
+
+    @Autowired
+    private FolderService folderService;
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public boolean check(@RequestParam Long id, String action, Boolean isFolder){
+        String createdBy;
+        if (isFolder) {
+            Folder folder = folderService.get(id);
+            createdBy = folder != null ? folder.getCreatedBy() : "";
+        }
+        else{
+            Document document = documentService.get(id);
+            createdBy = document != null ? document.createdBy() : "";
+        }
+        if (createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())
+                || (action.equals("delete") &&
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin"))){
+            return true;
+        }
+        return false;
+    }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
     //@Produces(MediaType.ALL_VALUE)

@@ -63,23 +63,23 @@ public class DocumentController {
     @RequestMapping(value = "/editFolder", method = RequestMethod.GET)
     public ModelAndView showEditFolderForm(@RequestParam(required = true) Long id){
         Folder folder = folderService.get(id);
-        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+//        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
             return new ModelAndView("addFolder", "folder", folder);
-        }
-        else
-            return new ModelAndView("");
+//        }
+//        else
+//            return new ModelAndView("");
     }
 
     @RequestMapping(value = "/deleteFolder", method = RequestMethod.GET)
     public String deleteFolder(@RequestParam(required = true) Long id){
         Folder folder = folderService.get(id);
         Long parentId = folder.getParentId();
-        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+//        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
             folderService.remove(id);
-        }
-        else{
-
-        }
+//        }
+//        else{
+//
+//        }
         return "redirect:/document?id=" + parentId;
 
     }

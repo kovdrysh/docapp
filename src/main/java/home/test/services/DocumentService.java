@@ -60,6 +60,19 @@ public class DocumentService {
         return documents;
     }
 
+    public Document get(Long id){
+        GridFSFile gridFSFile = documentDao.getById(id);
+        String id1 = gridFSFile.getObjectId().toHexString();
+        Long idF = (Long) gridFSFile.getMetadata().get("objectId");
+        String fileName = MongoHelper.cutFileName(gridFSFile.getFilename());
+        String parseType = (String) gridFSFile.getMetadata().get("doctype");
+        String date = (String) gridFSFile.getMetadata().get("date");
+        Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
+        String createdBy = (String) gridFSFile.getMetadata().get("createdBy");
+
+        return new Document(id1, idF, parentId1, fileName, date, parseType, createdBy);
+    }
+
     public GridFSDBFile getFileById(String id) {
         return documentDao.getFileById(id);
     }
