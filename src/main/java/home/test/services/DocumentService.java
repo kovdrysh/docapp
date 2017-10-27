@@ -81,5 +81,17 @@ public class DocumentService {
         }
     }
 
+    public boolean validateForDelete(List<Long> parentIds){
+        for (Long parentId : parentIds) {
+            List<Document> documentsForRemove = getAllByParentId(parentId);
+            for (Document document : documentsForRemove) {
+                if (!document.createdBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 }

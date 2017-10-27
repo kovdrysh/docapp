@@ -5,6 +5,7 @@ import home.test.dao.FolderDao;
 import home.test.model.Folder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,9 +66,26 @@ public class FolderService {
             currentId = f.getParentId();
             folders.add(0, f);
         }
-        //folders.add(0, new Folder(Long.valueOf("0"), ".."));
-        LOGGER.debug("Folder size := " + folders.size());
     return folders;
+    }
+
+    public boolean validateForDelete(Long id){
+        List<Folder> view = getAllByParentId(id);
+        List<Long> itemsIdToDelete = new ArrayList<Long>();
+        while (view.size() > 0){
+            Long idForLook = view.get(view.size() - 1).getId();
+
+            if (!get(idForLook).getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+                return false;
+            }
+            itemsIdToDelete.add(view.get(view.size() - 1).getId());
+            view.remove(view.size() - 1);
+            view.addAll(getAllByParentId(idForLook));
+        }
+        if (documentService.validateForDelete(itemsIdToDelete)) {
+            return true;
+        }
+        else return false;
     }
 
 

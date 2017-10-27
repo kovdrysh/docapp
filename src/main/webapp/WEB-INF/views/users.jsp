@@ -29,6 +29,7 @@
         </div>
     </div>
     <div class="tablediv" >
+        <h1><b>All Users</b></h1>
         <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
             <thread>
                 <tr>
@@ -47,7 +48,7 @@
                     <td><p>${user.email}</p></td>
                     <td><p>${user.nickname}</p></td>
                     <td><p>${user.userRole}</p></td>
-                    <td><a style="color: black" href="/editUser?id=${user.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="/deleteUser?id=${user.id}"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
+                    <td><a style="color: black" href="/editUser?id=${user.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteUser?id=${user.id}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
                 </tr>
             </c:forEach>
 
@@ -61,22 +62,19 @@
 <jsp:include page="uploadModal.jsp"/>
 <jsp:include page="confirmDeleteModal.jsp"/>
 
-<!--<script>
+<script>
     $('#confirm-delete').on('show.bs.modal', function(e) {
-        if ($(e.relatedTarget).data('folder'))
-            $('.debug-url').html('Are you sure to delete this folder with its files?');
-        else
-            $('.debug-url').html('Are you sure to delete this file?');
+        $('.debug-url').html('Are you sure to delete this user?');
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $('#createModal').on('show.bs.modal', function(e) {
-        if ($(e.relatedTarget).data('action') === "edit")
-            $(this).find('#exampleModalLabel').html("Edit Folder");
-        $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
-        $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
-        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-        $(this).find('#folder-name').focus();
-    });
+//    $('#createModal').on('show.bs.modal', function(e) {
+//        if ($(e.relatedTarget).data('action') === "edit")
+//            $(this).find('#exampleModalLabel').html("Edit Folder");
+//        $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
+//        $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
+//        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+//        $(this).find('#folder-name').focus();
+//    });
 </script>-->
 </body>
 </html>
