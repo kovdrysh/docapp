@@ -11,6 +11,7 @@ import home.test.model.Document;
 import org.apache.log4j.Logger;
 import org.bson.BsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,7 @@ public class DocumentService {
             metaData.put("parentId", parentId);
             metaData.put("doctype", MongoHelper.parseType(file.getOriginalFilename()));
             metaData.put("date", MongoHelper.generateCurrentDate());
+            metaData.put("createdBy", SecurityContextHolder.getContext().getAuthentication().getName());
 
             documentDao.save(document, metaData);
         } catch (IOException e) {
@@ -47,17 +49,13 @@ public class DocumentService {
         for (GridFSFile gridFSFile : allbyParentId) {
             String id1 = gridFSFile.getObjectId().toHexString();
             Long id = (Long) gridFSFile.getMetadata().get("objectId");
-            logger.debug("File objectId: " + id);
             String fileName = MongoHelper.cutFileName(gridFSFile.getFilename());
-            logger.debug("fileName: " + fileName);
             String parseType = (String) gridFSFile.getMetadata().get("doctype");
-            logger.debug("parseType: " + parseType);
             String date = (String) gridFSFile.getMetadata().get("date");
-            logger.debug("date: " + date);
             Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
-            logger.debug("parentId: " + parentId1);
+            String createdBy = (String) gridFSFile.getMetadata().get("createdBy");
 
-            documents.add(new Document(id1, id, parentId1, fileName, date, parseType));
+            documents.add(new Document(id1, id, parentId1, fileName, date, parseType, createdBy));
         }
         return documents;
     }

@@ -26,8 +26,7 @@ public class DocumentController {
     @RequestMapping(value="/document", method = RequestMethod.GET)
     public ModelAndView showAll(@RequestParam(required = false) Long id){
         ModelAndView modelAndView = new ModelAndView("documents");
-        System.out.println("CURRENT USER:" + SecurityContextHolder.getContext().getAuthentication().getName());
-        LOGGER.debug("CURRENT USER:" + SecurityContextHolder.getContext().getAuthentication().getName());
+        //modelAndView.addObject("user", );
         if (id == null){
             id = Long.valueOf("0");
         }
@@ -51,9 +50,11 @@ public class DocumentController {
     public String addFolder(Folder folder){
         LOGGER.debug("Folder "+folder.getName());
         if (folder.getId() == null){
+            folder.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
             folderService.add(folder);
         }
         else{
+
             folderService.update(folder);
         }
         return "redirect:/document?id=" + folder.getParentId();

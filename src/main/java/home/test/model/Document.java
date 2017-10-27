@@ -16,6 +16,15 @@ public class Document {
     private String name;
     private String contentType;
     private String date;
+    private String createdBy;
+
+    public String createdBy(){
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy){
+        this.createdBy = createdBy;
+    }
 
     public Long getId() {
         return id;
@@ -52,13 +61,16 @@ public class Document {
         return this._id.toString();
     }
 
-    public Document(String _id, Long id, Long parentId, String name, String date, String type) {
+
+
+    public Document(String _id, Long id, Long parentId, String name, String date, String type, String createdBy) {
         this._id = _id;
         this.id = id;
         this.parentId = parentId;
         this.name = name;
         this.date = date;
         this.type = type;
+        this.createdBy = createdBy;
     }
 
     public Document(InputStream inputStream, Long parentId, String name, String contentType, String date, String type) {
@@ -115,4 +127,6 @@ public class Document {
     public void setDate(String date) {
         this.date = date;
     }
+
+
 }

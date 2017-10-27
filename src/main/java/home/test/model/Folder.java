@@ -12,6 +12,7 @@ public class Folder {
     @Id
     private Long id;
     private Long parentId;
+    private String createdBy;
     private String name;
     private String date;
 
@@ -62,5 +63,13 @@ public class Folder {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }
