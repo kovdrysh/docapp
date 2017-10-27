@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -55,6 +56,19 @@ public class FolderService {
         folderDao.bulkRemove(itemsIdToDelete);
     }
 
+    public List<Folder> getAllParentFolders(Long id){
+        List<Folder> folders = new LinkedList<Folder>();
+        Folder f = get(id);
+        Long currentId = f.getParentId();
+        while (currentId != 0){
+            f = get(currentId);
+            currentId = f.getParentId();
+            folders.add(0, f);
+        }
+        //folders.add(0, new Folder(Long.valueOf("0"), ".."));
+        LOGGER.debug("Folder size := " + folders.size());
+    return folders;
+    }
 
 
 

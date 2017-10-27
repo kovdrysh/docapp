@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
     <title>All Documents</title>
@@ -24,9 +24,23 @@
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="../resources/js/upload.js"></script>-->
 <body>
+<sec:authorize access="isAuthenticated()">
+    <a href="<c:url value="/logout"/>">Logout</a>
+</sec:authorize>
     <div class="container">
         <div class="tablediv" >
-            <table class="table table-hover table-condensed     col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
+            <!--<div class="row col-md-12">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h1><b>${folderName}</b></h1>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <input type="text" class="form-control col-md-8 col-xs-8 col-sm-8">
+                    <button type="button" class="btn btn-success btn-xs col-md-4 col-xs-4 col-sm-4">Find</button>
+
+                </div>
+            </div>-->
+            <h1><b>${folderName}</b></h1>
+            <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
                 <thread>
                     <tr>
                         <td><b>Name</b></td>
@@ -35,7 +49,12 @@
                     </tr>
                 </thread>
                 <tr>
-                    <td><i class="fa fa-folder-open" aria-hidden="true"></i><a style="color: black" href="/document?id=${stepback}"> ..</a> </td>
+                    <td><i class="fa fa-folder-open" aria-hidden="true"></i>
+                        <a style="color: black" href="/document?id=0">..</a>/
+                        <c:forEach var="step" items="${stepback}">
+                            <a style="color: black" href="/document?id=${step.id}">${step.name}</a>/
+                        </c:forEach>
+                    </td>
                     <td></td>
                     <td></td>
                 </tr>

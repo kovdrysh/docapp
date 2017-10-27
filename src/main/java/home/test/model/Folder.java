@@ -15,7 +15,10 @@ public class Folder {
     private String name;
     private String date;
 
-    public Folder() {
+    public Folder(){}
+
+    public Folder(Long id, String name) {
+        this.id = id;
     }
 
     public Folder(Long id, Long parentId, String name, String date) {

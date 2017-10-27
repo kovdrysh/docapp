@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDao {
     @Autowired
@@ -33,6 +35,18 @@ public class UserDao {
         } else {
             throw new UserNotFoundException("Cannot update user in case fields with nickname and email are empty!");
         }
+    }
+
+    public User get (String type, String value){
+        return mongoOperations.findOne(Query.query(Criteria.where(type).is(value)), User.class);
+    }
+
+    public List<User> getAll(){
+        return mongoOperations.findAll(User.class);
+    }
+
+    public void delete(String id){
+        mongoOperations.remove(Query.query(Criteria.where("_id").is(id)), User.class);
     }
 
 }

@@ -54,4 +54,8 @@ public class MongoHelper {
     public static String cutFileName(String name){
         return name.length() <= 40 ? name : name.substring(0, 37) + "...";
     }
+
+    public static String defineUserRole(int userRole){
+        return userRole == 17 ? "Admin" : "User";
+    }
 }

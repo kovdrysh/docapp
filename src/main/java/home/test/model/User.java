@@ -1,4 +1,5 @@
 package home.test.model;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,17 +8,20 @@ import java.util.Collection;
 
 
 @Document(collection = User.COLLECTION_NAME)
-public class User implements UserDetails {
+public class User {
     public static final String COLLECTION_NAME = "users";
 
+    @Id
+    private String id;
     private String name;
     private String surname;
     private String email;
     private String nickname;
     private String password;
-    private int userRole;
+    private String userRole;
 
-    public User(String name, String surname, String email, String nickname, String password, int userRole) {
+    public User(String id, String name, String surname, String email, String nickname, String password, String userRole) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -26,9 +30,11 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
-    public void setUserName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
+
+    public String getName() {return name;}
 
     public String getSurname() {
         return surname;
@@ -52,6 +58,14 @@ public class User implements UserDetails {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -86,11 +100,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public int getUserRole() {
+    public String getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(int userRole) {
+    public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
 }

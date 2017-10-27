@@ -1,28 +1,19 @@
 package home.test.controller;
 
-import com.mongodb.gridfs.GridFSDBFile;
+
 import home.test.model.Folder;
 import home.test.services.DocumentService;
 import home.test.services.FolderService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class DocumentController {
@@ -35,15 +26,20 @@ public class DocumentController {
     @RequestMapping(value="/document", method = RequestMethod.GET)
     public ModelAndView showAll(@RequestParam(required = false) Long id){
         ModelAndView modelAndView = new ModelAndView("documents");
+        System.out.println("CURRENT USER:" + SecurityContextHolder.getContext().getAuthentication().getName());
+        LOGGER.debug("CURRENT USER:" + SecurityContextHolder.getContext().getAuthentication().getName());
         if (id == null){
             id = Long.valueOf("0");
         }
+
         if (id.equals(0) || id == 0){
-            modelAndView.addObject("stepback", 0);
+            modelAndView.addObject("folderName", "Top");
         }
-        else {
-            modelAndView.addObject("stepback", folderService.get(id).getParentId());
+        else{
+            modelAndView.addObject("folderName", folderService.get(id).getName());
+            modelAndView.addObject("stepback", folderService.getAllParentFolders(id));
         }
+
         modelAndView.addObject("folders", folderService.getAllByParentId(id));
         modelAndView.addObject("parentId", id);
         modelAndView.addObject("documents", documentService.getAllByParentId(id));

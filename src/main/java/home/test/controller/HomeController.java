@@ -4,55 +4,40 @@ import home.test.model.Contact;
 import home.test.services.ContactService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class HomeController{
-    @Autowired
-    private ContactService contactService;
+public class HomeController {
+
     private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView showall(){
-        LOGGER.debug("haha");
-        ModelAndView modelAndView = new ModelAndView("all");
-        modelAndView.addObject("contacts", contactService.getAll());
-        return modelAndView;
+    public String start(Model model) {
+        return "redirect:/login";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView showAddForm(){
 
-        return new ModelAndView("add_form", "contact", new Contact());
+    @RequestMapping(value = "/admin/", method = RequestMethod.GET)
+    public String admin() {
+        return "admin";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addContact(@ModelAttribute("contact") Contact contact){
-        if (contact.getId() == null)
-            contactService.add(contact);
-        else
-            contactService.update(contact);
-        return "redirect:/";
+
+    @RequestMapping(value = "/secure/", method = RequestMethod.GET)
+    public String secure() {
+        return "secure";
+
+
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView showEditForm(@RequestParam(required = true) Long id){
-        return new ModelAndView("add_form", "contact", contactService.get(id));
-    }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String deleteContact(@RequestParam(required = true) Long id) {
-        contactService.remove(id);
-
-        return "redirect:/";
-    }
 
 
 }
