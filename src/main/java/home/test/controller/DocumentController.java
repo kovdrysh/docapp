@@ -27,7 +27,7 @@ public class DocumentController {
     public ModelAndView showAll(@RequestParam(required = false) Long id){
         ModelAndView modelAndView = new ModelAndView("documents");
         //modelAndView.addObject("user", );
-        if (id == null){
+            if (id == null){
             id = Long.valueOf("0");
         }
 
@@ -39,7 +39,7 @@ public class DocumentController {
             modelAndView.addObject("stepback", folderService.getAllParentFolders(id));
         }
 
-        modelAndView.addObject("folders", folderService.getAllByParentId(id));
+        modelAndView.addObject("folders", folderService.getCustom(id));
         modelAndView.addObject("parentId", id);
         modelAndView.addObject("documents", documentService.getAllByParentId(id));
 

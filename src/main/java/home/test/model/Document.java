@@ -17,6 +17,7 @@ public class Document {
     private String contentType;
     private String date;
     private String createdBy;
+    private String deletable;
 
     public String createdBy(){
         return createdBy;
@@ -63,7 +64,7 @@ public class Document {
 
 
 
-    public Document(String _id, Long id, Long parentId, String name, String date, String type, String createdBy) {
+    public Document(String _id, Long id, Long parentId, String name, String date, String type, String createdBy, String contentType) {
         this._id = _id;
         this.id = id;
         this.parentId = parentId;
@@ -71,6 +72,7 @@ public class Document {
         this.date = date;
         this.type = type;
         this.createdBy = createdBy;
+        this.contentType = contentType;
     }
 
     public Document(InputStream inputStream, Long parentId, String name, String contentType, String date, String type) {
@@ -129,4 +131,11 @@ public class Document {
     }
 
 
+    public String getDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(String deletable) {
+        this.deletable = deletable;
+    }
 }

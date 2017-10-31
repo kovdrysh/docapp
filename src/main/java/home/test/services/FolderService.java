@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +39,30 @@ public class FolderService {
     }
 
     public List<Folder> getAllByParentId(Long parentId){
-        return folderDao.getAllByParentId(parentId);
+        List<Folder> folders;
+        folders = folderDao.getAllByParentId(parentId);
+        for (Folder folder : folders) {
+            Boolean result = checkFoeEdit(folder.getCreatedBy());
+            folder.setEditable(result.toString());
+            result = checkForDelete(folder.getId(), folder.getCreatedBy());
+            folder.setDeletable(result.toString());
+        }
+        System.out.println("Folders: " + folders.toArray());
+        return folders;
+    }
+
+    public List<Folder> getCustom(Long parentId){
+        List<Folder> folders;
+        folders = folderDao.getAllByParentId(parentId);
+        Boolean result;
+        for (int i = 0; i < folders.size(); i++){
+            result = checkFoeEdit(folders.get(i).getCreatedBy());
+            folders.get(i).setEditable(result ? "" : "disabled");
+            result = checkForDelete(folders.get(i).getId(),folders.get(i).getCreatedBy());
+            folders.get(i).setDeletable(result ? "" : "disabled");
+        }
+        System.out.println("Folders: " + folders.toArray());
+        return folders;
     }
 
     public void remove(Long id){
@@ -60,6 +82,7 @@ public class FolderService {
     public List<Folder> getAllParentFolders(Long id){
         List<Folder> folders = new LinkedList<Folder>();
         Folder f = get(id);
+        folders.add(0, f);
         Long currentId = f.getParentId();
         while (currentId != 0){
             f = get(currentId);
@@ -89,6 +112,14 @@ public class FolderService {
     }
 
 
+    private boolean checkFoeEdit(String createdBy){
+        return createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 
-
+    private boolean checkForDelete(Long id, String createdBy){
+        boolean res =  ((createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName()) &&
+                validateForDelete(id)) ||
+        (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin")));
+        return res;
+    }
 }

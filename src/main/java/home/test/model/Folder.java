@@ -3,8 +3,6 @@ package home.test.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
 @Document(collection = Folder.COLLECTION_NAME)
 public class Folder {
     public static final String COLLECTION_NAME = "folders";
@@ -15,6 +13,8 @@ public class Folder {
     private String createdBy;
     private String name;
     private String date;
+    private String editable;
+    private String deletable;
 
     public Folder(){}
 
@@ -72,4 +72,16 @@ public class Folder {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
+
+    public String getEditable(){ return editable; }
+
+    public String returnEdit(){return editable;}
+
+    public void setEditable(String editable){ this.editable = editable; }
+
+    public String returnDelete(){return deletable; }
+
+    public String getDeletable(){ return deletable; }
+
+    public void setDeletable(String deletable){ this.deletable = deletable; }
 }

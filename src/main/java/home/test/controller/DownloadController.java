@@ -31,24 +31,6 @@ public class DownloadController {
     @Autowired
     private FolderService folderService;
 
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public boolean check(@RequestParam Long id, String action, Boolean isFolder){
-        String createdBy;
-        if (isFolder) {
-            Folder folder = folderService.get(id);
-            createdBy = folder != null ? folder.getCreatedBy() : "";
-        }
-        else{
-            Document document = documentService.get(id);
-            createdBy = document != null ? document.createdBy() : "";
-        }
-        if (createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())
-                || (action.equals("delete") &&
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin"))){
-            return true;
-        }
-        return false;
-    }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
     //@Produces(MediaType.ALL_VALUE)
@@ -93,4 +75,26 @@ public class DownloadController {
 
 //        return response;
     }
+
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public boolean check(@RequestParam("id") Long id, @RequestParam("action") String action,
+                         @RequestParam("isFolder") Boolean isFolder){
+        String createdBy;
+        if (isFolder) {
+            Folder folder = folderService.get(id);
+            createdBy = folder != null ? folder.getCreatedBy() : "";
+        }
+        else{
+            Document document = documentService.get(id);
+            createdBy = document != null ? document.createdBy() : "";
+        }
+        if (createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())
+                || (action.equals("delete") &&
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin") &&
+                (isFolder ? folderService.validateForDelete(id) : true))){
+            return true;
+        }
+        return false;
+    }
+
 }

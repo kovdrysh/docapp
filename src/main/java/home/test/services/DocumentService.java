@@ -54,8 +54,12 @@ public class DocumentService {
             String date = (String) gridFSFile.getMetadata().get("date");
             Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
             String createdBy = (String) gridFSFile.getMetadata().get("createdBy");
+            String isDelete = checkForDelete(createdBy) ? "" : "disabled";
+            String contentType = (String) gridFSFile.getMetadata().get("_contentType");
+            Document doc = new Document(id1, id, parentId1, fileName, date, parseType, createdBy, contentType);
+            doc.setDeletable(isDelete);
+            documents.add(doc);
 
-            documents.add(new Document(id1, id, parentId1, fileName, date, parseType, createdBy));
         }
         return documents;
     }
@@ -69,8 +73,9 @@ public class DocumentService {
         String date = (String) gridFSFile.getMetadata().get("date");
         Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
         String createdBy = (String) gridFSFile.getMetadata().get("createdBy");
+        String contentType = (String) gridFSFile.getMetadata().get("_contentType");
 
-        return new Document(id1, idF, parentId1, fileName, date, parseType, createdBy);
+        return new Document(id1, idF, parentId1, fileName, date, parseType, createdBy, contentType);
     }
 
     public GridFSDBFile getFileById(String id) {
@@ -93,6 +98,14 @@ public class DocumentService {
             delete(aLong);
         }
     }
+
+    private boolean checkForDelete(String createdBy){
+        boolean res =  ((createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+                 ||
+                (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin")));
+        return res;
+    }
+
 
     public boolean validateForDelete(List<Long> parentIds){
         for (Long parentId : parentIds) {
