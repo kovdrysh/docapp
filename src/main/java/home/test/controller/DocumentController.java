@@ -48,7 +48,7 @@ public class DocumentController {
 
     @RequestMapping(value = "/addFolder", method = RequestMethod.POST)
     public String addFolder(Folder folder){
-        LOGGER.debug("Folder "+folder.getName());
+        LOGGER.debug("Folder " + folder.getName());
         if (folder.getId() == null){
             folder.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
             folderService.add(folder);
@@ -70,14 +70,8 @@ public class DocumentController {
     public String deleteFolder(@RequestParam(required = true) Long id){
         Folder folder = folderService.get(id);
         Long parentId = folder.getParentId();
-//        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            folderService.remove(id);
-//        }
-//        else{
-//
-//        }
+        folderService.remove(id);
         return "redirect:/document?id=" + parentId;
-
     }
 
     @RequestMapping(value = "/deleteDoc", method = RequestMethod.GET)

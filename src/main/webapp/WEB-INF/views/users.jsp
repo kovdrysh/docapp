@@ -3,7 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
-    <title>All Documents</title>
+    <title>All Users</title>
     <script type="text/javascript" src="../resources/js/script.js"></script>
     <script type="text/javascript" src="../resources/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../resources/js/popper.js"></script>
@@ -48,7 +48,8 @@
                     <td><p>${user.email}</p></td>
                     <td><p>${user.nickname}</p></td>
                     <td><p>${user.userRole}</p></td>
-                    <td><a style="color: black" href="#" id="edit-user" data-href="/editUser?id=${user.id}" data-toggle="modal" data-target="#editUser" data-name="${user.nickname}" data-id="${user.id}" data-action="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteUser?id=${user.id}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
+                    <td><a style="color: black" href="#" id="edit-user" data-href="/editUser" data-toggle="modal" data-target="#editUser" data-name="${user.name}" data-id="${user.id}"
+                           data-surname="${user.surname}" data-email="${user.email}" data-nickname="${user.nickname}" data-password="${user.password}" data-userRole="${user.userRole}" data-action="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteUser?id=${user.id}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
                 </tr>
             </c:forEach>
 
@@ -61,13 +62,14 @@
 <jsp:include page="addUser.jsp"/>
 <jsp:include page="uploadModal.jsp"/>
 <jsp:include page="confirmDeleteModal.jsp"/>
+<jsp:include page="editUser.jsp"/>
 
 <script>
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $('.debug-url').html('Are you sure to delete this user?');
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-    $('#createModal').on('show.bs.modal', function(e) {
+    $('#editUser').on('show.bs.modal', function(e) {
         if ($(e.relatedTarget).data('action') === "edit")
             $(this).find('#exampleModalLabel').html("Edit User");
             $(this).find('#user-name').val($(e.relatedTarget).data('name'));
@@ -76,7 +78,10 @@
             $(this).find('#user-email').val($(e.relatedTarget).data('email'));
             $(this).find('#user-nickname').val($(e.relatedTarget).data('nickname'));
             $(this).find('#user-password').val($(e.relatedTarget).data('password'));
-            $(this).find('#user-userRole').val($(e.relatedTarget).data('userRole'));
+            var text = $(e.relatedTarget).data('userRole');
+            $(this).find("#user-userRole option").filter(function() {
+                return $(this).text() === text;
+            }).prop('selected', true);
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
             $(this).find('#user-name').focus();
     });

@@ -42,4 +42,9 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @RequestMapping(value = "/editUser", method = RequestMethod.GET)
+    public String updateUser(@RequestParam(required = true) User user){
+        return "redirect:/users";
+    }
+
 }

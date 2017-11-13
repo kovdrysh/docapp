@@ -20,6 +20,7 @@ public class FolderService {
     private DocumentService documentService;
 
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(FolderService.class);
+
     public void add(Folder folder){
         folder.setId(MongoHelper.generateId());
         folder.setDate(MongoHelper.generateCurrentDate());
