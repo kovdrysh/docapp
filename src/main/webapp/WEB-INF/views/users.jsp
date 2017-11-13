@@ -48,7 +48,7 @@
                     <td><p>${user.email}</p></td>
                     <td><p>${user.nickname}</p></td>
                     <td><p>${user.userRole}</p></td>
-                    <td><a style="color: black" href="/editUser?id=${user.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteUser?id=${user.id}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
+                    <td><a style="color: black" href="#" id="edit-user" data-href="/editUser?id=${user.id}" data-toggle="modal" data-target="#editUser" data-name="${user.nickname}" data-id="${user.id}" data-action="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> | <a style="color: black" href="#" data-href="/deleteUser?id=${user.id}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
                 </tr>
             </c:forEach>
 
@@ -67,14 +67,19 @@
         $('.debug-url').html('Are you sure to delete this user?');
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
-//    $('#createModal').on('show.bs.modal', function(e) {
-//        if ($(e.relatedTarget).data('action') === "edit")
-//            $(this).find('#exampleModalLabel').html("Edit Folder");
-//        $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
-//        $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
-//        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-//        $(this).find('#folder-name').focus();
-//    });
-</script>-->
+    $('#createModal').on('show.bs.modal', function(e) {
+        if ($(e.relatedTarget).data('action') === "edit")
+            $(this).find('#exampleModalLabel').html("Edit User");
+            $(this).find('#user-name').val($(e.relatedTarget).data('name'));
+            $(this).find('#user-id').val($(e.relatedTarget).data('id'));
+            $(this).find('#user-surname').val($(e.relatedTarget).data('surname'));
+            $(this).find('#user-email').val($(e.relatedTarget).data('email'));
+            $(this).find('#user-nickname').val($(e.relatedTarget).data('nickname'));
+            $(this).find('#user-password').val($(e.relatedTarget).data('password'));
+            $(this).find('#user-userRole').val($(e.relatedTarget).data('userRole'));
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            $(this).find('#user-name').focus();
+    });
+</script>
 </body>
 </html>

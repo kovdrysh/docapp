@@ -10,7 +10,7 @@
     <http pattern="/css/**" security="none" />
     <http pattern="/logout/user/" security="none" />
     <http auto-config="true"  use-expressions="true">
-        <intercept-url pattern="/document/**" access="hasAnyAuthority('User','Admin')" />
+        <intercept-url pattern="/document/**" access="hasAnyAuthority('User','Admin','Moderator')" />
         <intercept-url pattern="/users/**" access="hasAuthority('Admin')" />
         <intercept-url pattern="/login.jsp*" access="hasAuthority('IS_AUTHENTICATED_ANONYMOUSLY')"/>
         <logout logout-url="/logout" />

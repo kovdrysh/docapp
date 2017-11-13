@@ -100,10 +100,12 @@ public class DocumentService {
     }
 
     private boolean checkForDelete(String createdBy){
-        boolean res =  ((createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName()))
-                 ||
-                (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin")));
-        return res;
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Moderator") ||
+                createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+            return true;
+        }
+        else
+            return false;
     }
 
 

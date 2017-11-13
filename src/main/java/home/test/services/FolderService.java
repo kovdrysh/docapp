@@ -42,24 +42,10 @@ public class FolderService {
         List<Folder> folders;
         folders = folderDao.getAllByParentId(parentId);
         for (Folder folder : folders) {
-            Boolean result = checkFoeEdit(folder.getCreatedBy());
+            Boolean result = checkForEdit(folder.getCreatedBy());
             folder.setEditable(result.toString());
             result = checkForDelete(folder.getId(), folder.getCreatedBy());
             folder.setDeletable(result.toString());
-        }
-        System.out.println("Folders: " + folders.toArray());
-        return folders;
-    }
-
-    public List<Folder> getCustom(Long parentId){
-        List<Folder> folders;
-        folders = folderDao.getAllByParentId(parentId);
-        Boolean result;
-        for (int i = 0; i < folders.size(); i++){
-            result = checkFoeEdit(folders.get(i).getCreatedBy());
-            folders.get(i).setEditable(result ? "" : "disabled");
-            result = checkForDelete(folders.get(i).getId(),folders.get(i).getCreatedBy());
-            folders.get(i).setDeletable(result ? "" : "disabled");
         }
         System.out.println("Folders: " + folders.toArray());
         return folders;
@@ -112,14 +98,22 @@ public class FolderService {
     }
 
 
-    private boolean checkFoeEdit(String createdBy){
-        return createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName());
+    private boolean checkForEdit(String createdBy) {
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Moderator") ||
+                createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            return true;
+        } else
+            return false;
     }
 
     private boolean checkForDelete(Long id, String createdBy){
-        boolean res =  ((createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName()) &&
-                validateForDelete(id)) ||
-        (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Admin")));
-        return res;
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Moderator"))
+            return true;
+        else if (createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName()) &&
+                validateForDelete(id)){
+            return true;
+        }
+        else
+            return false;
     }
 }

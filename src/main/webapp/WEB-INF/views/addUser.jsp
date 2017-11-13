@@ -34,6 +34,7 @@
                         <select id="user-role" autofocus name="userRole"  path="user-role">
                             <option>User</option>
                             <option>Admin</option>
+                            <option>Moderator</option>
                         </select>
                     </div>
                 </div>

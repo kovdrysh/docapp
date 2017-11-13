@@ -39,7 +39,7 @@ public class DocumentController {
             modelAndView.addObject("stepback", folderService.getAllParentFolders(id));
         }
 
-        modelAndView.addObject("folders", folderService.getCustom(id));
+        modelAndView.addObject("folders", folderService.getAllByParentId(id));
         modelAndView.addObject("parentId", id);
         modelAndView.addObject("documents", documentService.getAllByParentId(id));
 
@@ -63,11 +63,7 @@ public class DocumentController {
     @RequestMapping(value = "/editFolder", method = RequestMethod.GET)
     public ModelAndView showEditFolderForm(@RequestParam(required = true) Long id){
         Folder folder = folderService.get(id);
-//        if (folder.getCreatedBy().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            return new ModelAndView("addFolder", "folder", folder);
-//        }
-//        else
-//            return new ModelAndView("");
+        return new ModelAndView("addFolder", "folder", folder);
     }
 
     @RequestMapping(value = "/deleteFolder", method = RequestMethod.GET)
@@ -89,7 +85,6 @@ public class DocumentController {
         documentService.delete(id);
         return "redirect:/document?id=" + parentId;
     }
-    //@GET
-    //@Path("/download/file/{id}")
+
 
 }
