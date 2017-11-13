@@ -2,6 +2,7 @@ package home.test.services;
 
 import home.test.Utils.MongoHelper;
 import home.test.dao.FolderDao;
+import home.test.model.Action;
 import home.test.model.Folder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class FolderService {
     private FolderDao folderDao;
     @Autowired
     private DocumentService documentService;
+    @Autowired
+    private HistoryService historyService;
 
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(FolderService.class);
 
@@ -25,10 +28,13 @@ public class FolderService {
         folder.setId(MongoHelper.generateId());
         folder.setDate(MongoHelper.generateCurrentDate());
         folderDao.save(folder);
+        historyService.add(Action.Create, "A new folder '" + folder.getName() + "' was created. " +
+                "Object id: " + folder.getId());
     }
 
     public void update(Folder folder){
         folderDao.update(folder);
+        historyService.add(Action.Edit, "A folder was renamed. Object id: " + folder.getId());
     }
 
     public Folder get(Long id){
@@ -64,6 +70,9 @@ public class FolderService {
         }
         documentService.bulkDelete(itemsIdToDelete);
         folderDao.bulkRemove(itemsIdToDelete);
+        for (Long aLong : itemsIdToDelete) {
+            historyService.add(Action.Delete, "A folder was deleted. Object id: " + aLong);
+        }
     }
 
     public List<Folder> getAllParentFolders(Long id){

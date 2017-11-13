@@ -12,6 +12,7 @@
     <http auto-config="true"  use-expressions="true">
         <intercept-url pattern="/document/**" access="hasAnyAuthority('User','Admin','Moderator')" />
         <intercept-url pattern="/users/**" access="hasAuthority('Admin')" />
+        <intercept-url pattern="/history/**" access="hasAuthority('Admin')" />
         <intercept-url pattern="/login.jsp*" access="hasAuthority('IS_AUTHENTICATED_ANONYMOUSLY')"/>
         <logout logout-url="/logout" />
         <form-login login-page="/login" login-processing-url="/j_spring_security_check" username-parameter="j_username"

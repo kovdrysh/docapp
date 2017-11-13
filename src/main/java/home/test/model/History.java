@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = Folder.COLLECTION_NAME)
+@Document(collection = History.COLLECTION_NAME)
 public class History {
     public static final String COLLECTION_NAME = "history";
 
@@ -14,10 +14,10 @@ public class History {
     private Long id;
     private String action;
     private String userName;
-    private Date date;
+    private String date;
     private String message;
 
-    public History(Long id, String action, String userName, Date date, String message) {
+    public History(Long id, String action, String userName, String date, String message) {
         this.id = id;
         this.action = action;
         this.userName = userName;
@@ -49,11 +49,11 @@ public class History {
         this.userName = userName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

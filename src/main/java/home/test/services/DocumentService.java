@@ -7,6 +7,7 @@ import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.gridfs.GridFSDBFile;
 import home.test.Utils.MongoHelper;
 import home.test.dao.DocumentDao;
+import home.test.model.Action;
 import home.test.model.Document;
 import org.apache.log4j.Logger;
 import org.bson.BsonValue;
@@ -24,6 +25,9 @@ import java.util.List;
 public class DocumentService {
     @Autowired
     private DocumentDao documentDao;
+    @Autowired
+    private HistoryService historyService;
+
     private static final Logger logger = Logger.getLogger(DocumentService.class);
 
     public void save(Long parentId, MultipartFile file) {
@@ -36,8 +40,8 @@ public class DocumentService {
             metaData.put("doctype", MongoHelper.parseType(file.getOriginalFilename()));
             metaData.put("date", MongoHelper.generateCurrentDate());
             metaData.put("createdBy", SecurityContextHolder.getContext().getAuthentication().getName());
-
             documentDao.save(document, metaData);
+            historyService.add(Action.Create, "A new document was added. Doc name: " + document.getName());
         } catch (IOException e) {
             logger.debug("Cannot create object");
         }
@@ -83,7 +87,9 @@ public class DocumentService {
     }
 
     public void delete(Long id) {
+        String name = get(id).getName();
         documentDao.delete(id);
+        historyService.add(Action.Delete, "A document was deleted. Doc name: " + name);
     }
 
     public void bulkDelete(List<Long> parentIds) {
@@ -94,8 +100,11 @@ public class DocumentService {
                 itemsIdToDelete.add(document.getId());
             }
         }
+        String itemNameToDelete = "";
         for (Long aLong : itemsIdToDelete) {
+            itemNameToDelete = get(aLong).getName();
             delete(aLong);
+            historyService.add(Action.Delete, "A document was deleted. Document name: " + itemNameToDelete);
         }
     }
 

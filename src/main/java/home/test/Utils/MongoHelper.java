@@ -18,6 +18,11 @@ public class MongoHelper {
         return simpleDateFormat.format(new Date());
     }
 
+    public static String generateCurrentDateWithTime(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy hh:mm");
+        return simpleDateFormat.format(new Date());
+    }
+
     public static String parseType(String fileName){
         String [] parseFileName = fileName.split(Pattern.quote("."));
         if (parseFileName.length > 0){
@@ -52,11 +57,9 @@ public class MongoHelper {
         return "txt.png";
     }
 
-    public static String cutFileName(String name){
+   public static String cutFileName(String name){
         return name.length() <= 40 ? name : name.substring(0, 37) + "...";
     }
 
-    public static String defineUserRole(int userRole){
-        return userRole == 17 ? "Admin" : "User";
-    }
+
 }
