@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.gridfs.GridFSDBFile;
+import home.test.Utils.EmailSender;
 import home.test.Utils.MongoHelper;
 import home.test.dao.DocumentDao;
 import home.test.model.Action;
@@ -89,6 +90,7 @@ public class DocumentService {
     public void delete(Long id) {
         String name = get(id).getName();
         documentDao.delete(id);
+        //new EmailSender("kovdrish@gmail.com", "howcanilearnit").send("Deleted item", "Your document " + name + "was deleted!", "supportdocapp@gmail.com", "kovdrish@gmail.com");
         historyService.add(Action.Delete, "A document was deleted. Doc name: " + name);
     }
 
