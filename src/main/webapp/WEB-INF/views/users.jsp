@@ -80,8 +80,8 @@
             $(this).find('#user-password').val($(e.relatedTarget).data('password'));
             var text = $(e.relatedTarget).data('userRole');
             $(this).find("#user-userRole option").filter(function() {
-                return $(this).text() === text;
                 console.log(text);
+                return $(this).text() == text;
             }).prop('selected', true);
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
             $(this).find('#user-name').focus();

@@ -41,10 +41,4 @@ public class UserController {
         userService.delete(id);
         return "redirect:/users";
     }
-
-    @RequestMapping(value = "/editUser", method = RequestMethod.GET)
-    public String updateUser(@RequestParam(required = true) User user){
-        return "redirect:/users";
-    }
-
 }

@@ -25,47 +25,46 @@
 <script src="../resources/js/upload.js"></script>-->
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="logout">
-                <sec:authorize access="isAuthenticated()">
-                    <a href="<c:url value="/logout"/>"><button type="button" class="btn btn-success btn-md text-right">Logout</button></a>
-                </sec:authorize>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="logout">
+            <sec:authorize access="isAuthenticated()">
+                <a href="<c:url value="/logout"/>"><button type="button" class="btn btn-success btn-md text-right">Logout</button></a>
+            </sec:authorize>
         </div>
-        <div class="tablediv" >
-            <!--<div class="row col-md-12">
+    </div>
+    <div class="tablediv" >
+        <!--<div class="row col-md-12">
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <h1><b>${folderName}</b></h1>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <input type="text" class="form-control col-md-8 col-xs-8 col-sm-8">
                     <button type="button" class="btn btn-success btn-xs col-md-4 col-xs-4 col-sm-4">Find</button>
-
                 </div>
             </div>-->
-            <h1><b>${folderName}</b></h1>
-            <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
-                <thread>
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Created By</b></td>
-                        <td><b>Created Date</b></td>
-                        <td><b>Document type</b></td>
-                        <td><b>Action</b></td>
-                    </tr>
-                </thread>
+        <h1><b>${folderName}</b></h1>
+        <table class="table table-hover table-condensed col-md-4 col-sm-12 col-xs-12 col-lg-4 main-table" >
+            <thread>
                 <tr>
-                    <td><i class="fa fa-folder-open" aria-hidden="true"></i>
-                        <a style="color: black" href="/document?id=0">..</a>/
-                        <c:forEach var="step" items="${stepback}">
-                            <a style="color: black" href="/document?id=${step.id}">${step.name}</a>/
-                        </c:forEach>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><b>Name</b></td>
+                    <td><b>Created By</b></td>
+                    <td><b>Created Date</b></td>
+                    <td><b>Document type</b></td>
+                    <td><b>Action</b></td>
                 </tr>
+            </thread>
+            <tr>
+                <td><i class="fa fa-folder-open" aria-hidden="true"></i>
+                    <a style="color: black" href="/document?id=0">..</a>/
+                    <c:forEach var="step" items="${stepback}">
+                        <a style="color: black" href="/document?id=${step.id}">${step.name}</a>/
+                    </c:forEach>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
             <c:forEach var="folder" items="${folders}">
                 <tr>
                     <td><p><i class="fa fa-folder" aria-hidden="true"></i><a style="color: black" href="/document?id=${folder.id}"> ${folder.name}</a></p></td>
@@ -87,32 +86,32 @@
                     <td><a style="color: black" href="/download/${document._id}"><i class="fa fa-download" aria-hidden="true"></i></a> | <a style="color: black" class="${document.deletable}" href="#" data-href="/deleteDoc?id=${document.id}&parentId=${document.parentId}" data-toggle="modal" data-target="#confirm-delete" data-folder="false"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
             </c:forEach>
-            </table>
-        </div>
-        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#createModal">Create folder</button>
-        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#uploadModal">Add document</button>
+        </table>
     </div>
+    <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#createModal">Create folder</button>
+    <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#uploadModal">Add document</button>
+</div>
 
-    <jsp:include page="createModal.jsp"/>
-    <jsp:include page="uploadModal.jsp"/>
-    <jsp:include page="confirmDeleteModal.jsp"/>
+<jsp:include page="createModal.jsp"/>
+<jsp:include page="uploadModal.jsp"/>
+<jsp:include page="confirmDeleteModal.jsp"/>
 
-    <script>
-        $('#confirm-delete').on('show.bs.modal', function(e) {
-            if ($(e.relatedTarget).data('folder'))
-                $('.debug-url').html('Are you sure to delete this folder with its files?');
-            else
-                $('.debug-url').html('Are you sure to delete this file?');
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-        });
-        $('#createModal').on('show.bs.modal', function(e) {
-            if ($(e.relatedTarget).data('action') === "edit")
-                $(this).find('#exampleModalLabel').html("Edit Folder");
-            $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
-            $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-            $(this).find('#folder-name').focus();
-        });
-    </script>
+<script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        if ($(e.relatedTarget).data('folder'))
+            $('.debug-url').html('Are you sure to delete this folder with its files?');
+        else
+            $('.debug-url').html('Are you sure to delete this file?');
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+    $('#createModal').on('show.bs.modal', function(e) {
+        if ($(e.relatedTarget).data('action') === "edit")
+            $(this).find('#exampleModalLabel').html("Edit Folder");
+        $(this).find('#folder-name').val($(e.relatedTarget).data('name'));
+        $(this).find('#folder-id').val($(e.relatedTarget).data('id'));
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $(this).find('#folder-name').focus();
+    });
+</script>
 </body>
 </html>

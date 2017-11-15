@@ -33,29 +33,13 @@ public class DownloadController {
 
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-    //@Produces(MediaType.ALL_VALUE)
     public void downloadDocument(@PathVariable("id") String id, HttpServletResponse response){
         LOGGER.debug("Start download document");
-//        Response response = null;
+
         GridFSDBFile fileById = null;
         try {
             fileById = documentService.getFileById(id);
-            LOGGER.debug("File is download. Name: " + fileById.getFilename());
             InputStream in = fileById.getInputStream();
-
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            int data = in.read();
-//            while (data >= 0) {
-//                out.write((char) data);
-//                data = in.read();
-//            }
-//            out.flush();
-//            out.close();
-            LOGGER.debug("File is ready");
-            //Response.ResponseBuilder responseBuilder = Response.ok(out.toByteArray());
-            //Response.ResponseBuilder responseBuilder = Response.ok(out.toByteArray(), fileById.getContentType());
-//            Response.ResponseBuilder responseBuilder = Response.ok(fileById);
-
             response.setHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(fileById.getFilename(), "UTF-8").replace("+", " ") + "\"");
 
             response.setContentType(fileById.getContentType());
@@ -67,13 +51,9 @@ public class DownloadController {
             }
             out.flush();
             out.close();
-//            response = responseBuilder.build();
-
         } catch (IOException e) {
             LOGGER.debug(e.getMessage());
         }
-
-//        return response;
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)

@@ -1,8 +1,5 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="user">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
@@ -10,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="folder-form" method="POST" action="/editUser" modelAttribute="">
+            <form id="folder-form" method="POST" action="/addUser">
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="col-xs-5" for="user-name">Name:</label>

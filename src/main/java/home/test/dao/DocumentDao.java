@@ -34,7 +34,7 @@ public class DocumentDao {
      }
 
     public GridFSFile getById(Long id){
-        return gridOperations.findOne(new Query().addCriteria(Criteria.where("_id").is(id)));
+        return gridOperations.findOne(new Query().addCriteria(Criteria.where("metadata.objectId").is(id)));
     }
 
     public GridFSDBFile getFileById(String id){
