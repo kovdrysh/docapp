@@ -21,10 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    private static final Logger logger = Logger.getLogger(CustomUserDetailsService.class);
-
     public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
-        User user = userDao.get("nickname", nickname);
+        User user = userDao.get(nickname);
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority(user.getUserRole()));
         UserDetails userDetails =

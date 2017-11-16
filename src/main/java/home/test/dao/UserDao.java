@@ -37,8 +37,8 @@ public class UserDao {
         }
     }
 
-    public User get (String type, String value){
-        return mongoOperations.findOne(Query.query(Criteria.where(type).is(value)), User.class);
+    public User get (String nickname){
+        return mongoOperations.findOne(Query.query(Criteria.where("nickname").is(nickname)), User.class);
     }
 
     public List<User> getAll(){

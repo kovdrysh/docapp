@@ -1,10 +1,5 @@
 package home.test.model;
 
-
-import org.bson.BSON;
-import org.bson.BsonValue;
-import org.bson.types.ObjectId;
-
 import java.io.InputStream;
 
 public class Document {

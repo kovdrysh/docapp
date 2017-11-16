@@ -6,14 +6,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
-    private String username;
-    private String password;
+    private final String USERNAME = "kovdrish@gmail.com";
+    private final String PASSWORD = "howcanilearnit";
     private Properties props;
 
-    public EmailSender(String username, String password) {
-        this.username = username;
-        this.password = password;
-
+    public EmailSender() {
         props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -24,13 +21,13 @@ public class EmailSender {
     public void send(String subject, String text, String fromEmail, String toEmail) {
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(USERNAME, PASSWORD);
             }
         });
         try {
             Message message = new MimeMessage(session);
             //от кого
-            message.setFrom(new InternetAddress(username));
+            message.setFrom(new InternetAddress(fromEmail));
             //кому
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
             //Заголовок письма

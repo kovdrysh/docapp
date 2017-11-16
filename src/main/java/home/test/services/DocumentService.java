@@ -5,11 +5,14 @@ import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.gridfs.GridFSDBFile;
+import home.test.Utils.CurrentUserInfo;
 import home.test.Utils.EmailSender;
 import home.test.Utils.MongoHelper;
 import home.test.dao.DocumentDao;
+import home.test.exceptions.UserNotFoundException;
 import home.test.model.Action;
 import home.test.model.Document;
+import home.test.model.User;
 import org.apache.log4j.Logger;
 import org.bson.BsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,12 @@ public class DocumentService {
     private DocumentDao documentDao;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private UserService userService;
+
+    private static final String TEXT_MESSAGE = "Your document was deleted. Doc name: ";
+    private static final String SUBJECT = "An item was deleted!";
+    private static final String FROM = "docappsupport@gmail.com";
 
     private static final Logger logger = Logger.getLogger(DocumentService.class);
 
@@ -59,7 +68,7 @@ public class DocumentService {
             String date = (String) gridFSFile.getMetadata().get("date");
             Long parentId1 = (Long) gridFSFile.getMetadata().get("parentId");
             String createdBy = (String) gridFSFile.getMetadata().get("createdBy");
-            String isDelete = checkForDelete(createdBy) ? "" : "disabled";
+            String isDelete = checkForDelete(createdBy).toString();
             String contentType = (String) gridFSFile.getMetadata().get("_contentType");
             Document doc = new Document(id1, id, parentId1, fileName, date, parseType, createdBy, contentType);
             doc.setDeletable(isDelete);
@@ -88,10 +97,10 @@ public class DocumentService {
     }
 
     public void delete(Long id) {
-        String name = get(id).getName();
+        Document document = get(id);
         documentDao.delete(id);
-        //new EmailSender("kovdrish@gmail.com", "howcanilearnit").send("Deleted item", "Your document " + name + "was deleted!", "supportdocapp@gmail.com", "kovdrish@gmail.com");
-        historyService.add(Action.Delete, "A document was deleted. Doc name: " + name);
+        sendEmail(document);
+        historyService.add(Action.Delete, "A document was deleted. Doc name: " + document.getName());
     }
 
     public void bulkDelete(List<Long> parentIds) {
@@ -110,15 +119,15 @@ public class DocumentService {
         }
     }
 
-    private boolean checkForDelete(String createdBy){
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Moderator") ||
-                createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+    private Boolean checkForDelete(String createdBy){
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("Moderator")){
             return true;
         }
-        else
-            return false;
+        else if (createdBy.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+            return true;
+        }
+        return false;
     }
-
 
     public boolean validateForDelete(List<Long> parentIds){
         for (Long parentId : parentIds) {
@@ -132,5 +141,12 @@ public class DocumentService {
         return true;
     }
 
-
+    private void sendEmail(Document document) {
+        if (!CurrentUserInfo.isCurrentUser(document.createdBy())) {
+            User user = userService.getUser(document.createdBy());
+            if (!user.getEmail().equals("") || user.getEmail() != null) {
+                new EmailSender().send(SUBJECT, TEXT_MESSAGE + document.getName(), FROM, user.getEmail());
+            }
+        }
+    }
 }
